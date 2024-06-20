@@ -75,32 +75,48 @@ print('Total paid', round (total_paid,2))
 print('Months', month)
 
 # Modify the program to print out a table showing the month,
-# total paid so far, and the remaining principal.
+# total paid so far, and the remaining balance. Make sure,
+# there is no overpayment in the end.
+
 
 initial = 500000
 monthly = 2684.11
 interest = 0.05
 total_paid = 0.0
 month = 0
-months_paid = 310
 
 extra_payment = 1000
-extra_payment_start_month = 61
-extra_payment_end_month = 108
+extra_payment_start_month = (5 * 12) + 1  # Start extra payment after 5 years
+extra_payment_end_month = (extra_payment_start_month + (4 * 12)) - 1  # End extra payment after 4 years
 
-while month < months_paid and initial > 0:
+# Header for the table
+print(f"{'Month':<6} {'Total Paid':<12} {'Remaining Balance':<16}") # means left alignment and number of spaces in a field
+
+# Loop until the loan is paid off
+while initial > 0:
     month += 1
-    interest_payment = initial * (interest / 12)
-    principal_payment = monthly - interest_payment
-    initial -= principal_payment
-    total_paid += monthly
 
+    # Calculate interest for the month
+    interest_for_month = initial * (interest / 12)
+    initial += interest_for_month
+
+    # Determine if an extra payment is applicable
     if extra_payment_start_month <= month <= extra_payment_end_month:
-        extra_payment = min(extra_payment, initial)  # Correct for overpayment
-        initial -= extra_payment
-        total_paid += extra_payment
+        payment = monthly + extra_payment
+    else:
+        payment = monthly
 
-    print(month, round(total_paid, 2), round(initial, 2))
+    # Adjust payment if it exceeds the remaining balance
+    if payment > initial:
+        payment = initial
 
-# needs to be corrected!
+    # Subtract the payment from the balance
+    initial -= payment
+    total_paid += payment
 
+    # Print the current state
+    print(f"{month:<6} {round(total_paid, 2):<12} {round(initial, 2):<16}")
+
+# Final outputs
+print('Total paid:', round(total_paid, 2))
+print('Months:', month)
