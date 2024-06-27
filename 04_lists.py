@@ -25,3 +25,5 @@ print(t)
 
 names.count("Curtis")
 # how many times does the item occure
+
+# in general lists can't be edited, you allways create a new list.
