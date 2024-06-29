@@ -36,5 +36,7 @@ if len(sys.argv) == 2:
 else:
     filename = input('Enter a filename:')
 
+# makes the script universal for different files 
+
 cost = portfolio_cost(filename)
 print('Total cost:', cost)
