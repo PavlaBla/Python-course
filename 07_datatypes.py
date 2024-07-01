@@ -104,6 +104,17 @@ print(keys)
 del d['account']
 print(keys)
 
+# items method gives us (key, value) tuple
+items = d.items()
+print(items)
+
+for k, v in d.items():
+    print(k, '=', v)
+
+d = dict(items)
+print(d)
+
+
 
 
 
