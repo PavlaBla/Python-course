@@ -33,8 +33,11 @@ def portfolio_cost(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
-             holding = (row[0], int(row[1]), float(row[2]))
-             portfolio.append(holding)
+             try:
+                holding = (row[0], int(row[1]), float(row[2]))
+                portfolio.append(holding)
+             except IndexError:
+                  print('Empty row:', row)
     return portfolio
 
 print(portfolio_cost('portfolio.csv'))
@@ -60,11 +63,48 @@ def portfolio_cost(filename):
 portfolio = portfolio_cost('portfolio.csv')
 print(portfolio)
 
-total = 0.0
+# Calculate the total cost of the portfolio
+total_cost = 0.0
 for s in portfolio:
-     total += s['shares'] * s['price']
+     total_cost += s['shares'] * s['price']
 
-print(total)
+print(total_cost)
 
 # To clean up the output for debugging, consider using the pprint function.
 pprint(portfolio)
+
+# Write a function read_prices(filename) that reads a set of prices 
+# into a dictionary where the keys of the dictionary are the stock 
+# names and the values in the dictionary are the stock prices.
+
+def read_prices(filename):
+     
+    prices = {}
+    with open(filename, mode= 'r', encoding='utf-8') as f:
+        rows = csv.reader(f)
+        headers = next(rows)
+        for row in rows:
+             try:
+                  prices[row[0]] = float(row[1])
+             except IndexError:
+                 pass
+    return prices
+
+print(read_prices('prices.csv'))
+
+prices = read_prices('prices.csv')
+print(prices['IBM'])
+
+# Tie all of this work together by adding a few additional statements to 
+# your report.py program that computes gain/loss. These statements should
+# take the list of stocks and the dictionary of prices and compute the 
+# current value of the portfolio along with the gain/loss.
+
+# Compute the current value of the portfolio
+total_value = 0.0
+
+for s in portfolio:
+    total_value += s['shares']*prices[s['name']]
+
+print (f'Current value: {total_value}')
+print (f'Gain: {total_value} - {total_cost}')
