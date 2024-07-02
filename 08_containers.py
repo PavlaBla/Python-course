@@ -1,3 +1,5 @@
+import csv
+
 # dictionaries:
 # You can look up a value that might not exist and 
 # provide a default value in case it doesn't.
