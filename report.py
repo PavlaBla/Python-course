@@ -53,11 +53,17 @@ def portfolio_cost(filename):
         rows = csv.reader(f)
         headers = next(rows)
         for row in rows:
-             dict = {'name':row[0], 
-                     'shares' : int(row[1]), 
-                     'price' : float(row[2])
-             }
-             portfolio.append(dict)
+            if len(row) < 3:
+                print('Incomplete row:', row)
+                continue
+            try:
+                dict = {'name':row[0], 
+                        'shares' : int(row[1]), 
+                        'price' : float(row[2])
+                        }
+                portfolio.append(dict)
+            except ValueError as e:
+                    print('Error processing row:', row, e)
     return portfolio
 
 portfolio = portfolio_cost('portfolio.csv')
@@ -66,7 +72,10 @@ print(portfolio)
 # Calculate the total cost of the portfolio
 total_cost = 0.0
 for s in portfolio:
-     total_cost += s['shares'] * s['price']
+    try:
+        total_cost += s['shares'] * s['price']
+    except KeyError:
+        print(f"Price for {s['name']} not found in prices list")
 
 print(total_cost)
 
@@ -104,7 +113,10 @@ print(prices['IBM'])
 total_value = 0.0
 
 for s in portfolio:
-    total_value += s['shares']*prices[s['name']]
+    try:
+        total_value += s['shares']*prices[s['name']]
+    except KeyError:
+        print(f"Price for {s['name']} not found in prices list")
 
 print (f'Current value: {total_value}')
-print (f'Gain: {total_value} - {total_cost}')
+print (f'Gain: {total_value - total_cost}')
