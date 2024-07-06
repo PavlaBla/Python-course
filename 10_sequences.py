@@ -48,3 +48,10 @@ pairs = zip(columns, values)
 # to get the values, you have to iterate
 for column, value in pairs:
     print(column, value)
+
+# basic counting examples:
+for n in range (10):
+    print(n, end=' ') # prints on one line
+
+for n in range (10, 0, -1):
+    print(n, end= ' ')
