@@ -103,3 +103,51 @@ else:
 
 cost = portfolio_cost(filename)
 print('Total cost:', cost)
+
+# In the file portfolio.csv, the first line contains
+#  column headers. In all previous code, we’ve been discarding them.
+# First try this to pair the file headers with a row of data using zip:
+
+
+with open('portfolio.csv', mode= 'r', encoding='utf-8') as f:
+    rows = csv.reader(f)
+    headers = next(rows)
+    row = next(rows)
+    
+    my_list = list(zip(headers, row))
+    print(list)
+    record = dict(zip(headers, row))
+    print(record)
+
+# This transformation is one of the most useful tricks to know about when 
+# processing a lot of data files. For example, suppose you wanted to make 
+# the pcost.py program work with various input files, but without regard 
+# for the actual column number where the name, shares, and price appear.
+
+# try your portfolio_cost function on a completely different data file : portfoliodate.csv 
+# As long as the file has the required columns, the code will work.
+
+# inverting a dictionary:
+prices = {
+        'GOOG' : 490.1,
+        'AA' : 23.45,
+        'IBM' : 91.1,
+        'MSFT' : 34.23
+    }
+
+# If you use the items() method, you can get (key,value) pairs:
+print(prices.items())
+
+# However, what if you wanted to get a list of (value, key) pairs instead? Hint: use zip().
+pricelist = list(zip(prices.values(),prices.keys()))
+print(pricelist)
+
+#  this allows you to perform certain kinds of data processing on the dictionary data,
+# such as min, max, sorted etc.
+sorted_pricelist = sorted(pricelist)
+print(sorted_pricelist)
+
+# be aware that zip() stops once the shortest input sequence is exhausted.
+a = [1, 2, 3, 4, 5, 6]
+b = ['x', 'y', 'z']
+print(list(zip(a,b)))
