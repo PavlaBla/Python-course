@@ -1,5 +1,6 @@
 from collections import Counter
 from collections import defaultdict
+from collections import deque
 
 portfolio = [
     ('GOOG', 100, 490.1),
@@ -22,3 +23,15 @@ print(total_shares['IBM'])
 # Problem: You want to map a key to multiple values.
 
 
+holdings = defaultdict(list)
+for name, shares, price in portfolio:
+    holdings[name].append((shares, price))
+
+print(holdings['IBM'])
+
+# Problem: We want a history of the last N things. Solution: Use a deque.
+history = deque(maxlen=N)
+with open(filename) as f:
+    for line in f:
+        history.append(line)
+        ...
