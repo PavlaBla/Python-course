@@ -21,7 +21,7 @@ for name, shares, price in portfolio:
 print(total_shares['IBM'])
 
 # Problem: You want to map a key to multiple values.
-
+# ////////////////////////////////////////////////////////////////////
 
 holdings = defaultdict(list)
 for name, shares, price in portfolio:
